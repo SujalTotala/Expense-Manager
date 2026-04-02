@@ -76,9 +76,21 @@ public class ExpenseController {
     }
 
     @PutMapping("/{id}")
-    public Expense updateExpense(@PathVariable Long id, @RequestBody Expense expense) {
-        expense.setId(id);
-        return expenseRepository.save(expense);
+    public Expense updateExpense(@PathVariable Long id, @RequestBody Expense updated) {
+
+        Expense e = expenseRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Expense not found"));
+
+        e.setTitle(updated.getTitle());
+        e.setAmount(updated.getAmount());
+        e.setCategory(updated.getCategory());
+
+        return expenseRepository.save(e);
+    }
+
+    @DeleteMapping("/settle")
+    public void settleUp() {
+        expenseShareRepository.deleteAll();
     }
 
     @GetMapping("/balances")

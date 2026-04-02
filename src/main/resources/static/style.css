@@ -1,0 +1,100 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(to right, #74ebd5, #ACB6E5);
+}
+
+/* APP */
+.app {
+    padding: 20px;
+}
+
+/* HEADER */
+header {
+    text-align: center;
+    color: white;
+    margin-bottom: 20px;
+}
+
+/* LAYOUT */
+.container {
+    display: flex;
+    gap: 20px;
+}
+
+/* CARD UI */
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    width: 50%;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+/* INPUT */
+input, select {
+    width: 95%;
+    padding: 10px;
+    margin: 6px 0;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+/* BUTTONS */
+button {
+    padding: 8px 12px;
+    margin: 5px 3px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    background: #3498db;
+    color: white;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #2980b9;
+}
+
+button.primary {
+    background: #2ecc71;
+}
+
+button.primary:hover {
+    background: #27ae60;
+}
+
+button.danger {
+    background: #e74c3c;
+}
+
+button.danger:hover {
+    background: #c0392b;
+}
+
+/* LIST */
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    background: #f1f1f1;
+    margin: 8px 0;
+    padding: 10px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* BALANCE COLORS */
+li.owe {
+    background: #ffe6e6;
+    color: #c0392b;
+}
+
+li.get {
+    background: #e6ffe6;
+    color: #27ae60;
+}

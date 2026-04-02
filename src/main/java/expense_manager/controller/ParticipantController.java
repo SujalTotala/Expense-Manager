@@ -25,4 +25,14 @@ public class ParticipantController {
     public List<Participant> getAllParticipants() {
         return service.getAllParticipants();
     }
+
+    @DeleteMapping("/{id}")
+    public void deleteParticipant(@PathVariable Long id) {
+        service.deleteParticipant(id);
+    }
+
+    @PutMapping("/{id}")
+    public Participant updateParticipant(@PathVariable Long id, @RequestBody Participant updated) {
+        return service.updateParticipant(id, updated);
+    }
 }

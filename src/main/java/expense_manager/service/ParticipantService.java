@@ -15,11 +15,24 @@ public class ParticipantService {
         this.repository = repository;
     }
 
-    public Participant addParticipant(Participant participant) {
-        return repository.save(participant);
+    public Participant addParticipant(Participant p) {
+        return repository.save(p);
     }
 
     public List<Participant> getAllParticipants() {
         return repository.findAll();
+    }
+
+    public void deleteParticipant(Long id) {
+        repository.deleteById(id);
+    }
+
+    public Participant updateParticipant(Long id, Participant updated) {
+        Participant p = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Not found"));
+
+        p.setName(updated.getName());
+
+        return repository.save(p);
     }
 }
