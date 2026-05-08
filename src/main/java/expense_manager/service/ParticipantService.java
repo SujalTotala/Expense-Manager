@@ -2,6 +2,7 @@ package expense_manager.service;
 
 import expense_manager.model.Participant;
 import expense_manager.repository.ParticipantRepository;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,21 +16,26 @@ public class ParticipantService {
         this.repository = repository;
     }
 
+    // ✅ Add
     public Participant addParticipant(Participant p) {
         return repository.save(p);
     }
 
+    // ✅ Get all
     public List<Participant> getAllParticipants() {
         return repository.findAll();
     }
 
+    // ✅ Delete
     public void deleteParticipant(Long id) {
         repository.deleteById(id);
     }
 
+    // ✅ Update
     public Participant updateParticipant(Long id, Participant updated) {
+
         Participant p = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Not found"));
+                .orElseThrow(() -> new RuntimeException("Participant not found"));
 
         p.setName(updated.getName());
 

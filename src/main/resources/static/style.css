@@ -1,3 +1,4 @@
+
 body {
     margin: 0;
     font-family: 'Segoe UI', sans-serif;
@@ -28,11 +29,12 @@ header {
     padding: 20px;
     border-radius: 15px;
     width: 50%;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
 /* INPUT */
-input, select {
+input,
+select {
     width: 95%;
     padding: 10px;
     margin: 6px 0;
@@ -97,4 +99,15 @@ li.owe {
 li.get {
     background: #e6ffe6;
     color: #27ae60;
+}
+
+/* ✅ RESPONSIVE (ADDED 🔥) */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .card {
+        width: 100%;
+    }
 }

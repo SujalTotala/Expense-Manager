@@ -3,6 +3,7 @@ package expense_manager.model;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "expense_shares")
 public class ExpenseShare {
 
     @Id
@@ -11,16 +12,20 @@ public class ExpenseShare {
 
     private double amountOwed;
 
+    // ✅ Many shares → one expense
     @ManyToOne
-    @JoinColumn(name = "expense_id")
+    @JoinColumn(name = "expense_id", nullable = false)
     private Expense expense;
 
+    // ✅ Many shares → one participant
     @ManyToOne
-    @JoinColumn(name = "participant_id")
+    @JoinColumn(name = "participant_id", nullable = false)
     private Participant participant;
 
+    // ✅ Default constructor
     public ExpenseShare() {}
 
+    // ✅ Getters & Setters
     public Long getId() {
         return id;
     }

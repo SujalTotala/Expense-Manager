@@ -2,15 +2,17 @@ package expense_manager.controller;
 
 import expense_manager.model.*;
 import expense_manager.repository.ExpenseRepository;
-import org.springframework.web.bind.annotation.*;
 import expense_manager.repository.ExpenseShareRepository;
 import expense_manager.repository.ParticipantRepository;
+
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/expenses")
+@CrossOrigin // ✅ important for frontend
 public class ExpenseController {
 
     private final ExpenseRepository expenseRepository;
@@ -25,8 +27,13 @@ public class ExpenseController {
         this.participantRepository = participantRepository;
     }
 
+    // ✅ Split Expense
     @PostMapping("/split")
     public Expense splitExpense(@RequestBody SplitExpenseRequest request) {
+
+        if (request.getParticipantIds() == null || request.getParticipantIds().isEmpty()) {
+            throw new RuntimeException("Participants required");
+        }
 
         Expense expense = new Expense();
         expense.setTitle(request.getTitle());
@@ -35,7 +42,7 @@ public class ExpenseController {
 
         Participant payer = participantRepository
                 .findById(request.getPaidById())
-                .orElseThrow();
+                .orElseThrow(() -> new RuntimeException("Payer not found"));
 
         expense.setPaidBy(payer);
 
@@ -44,10 +51,9 @@ public class ExpenseController {
         double splitAmount = request.getAmount() / request.getParticipantIds().size();
 
         for (Long participantId : request.getParticipantIds()) {
-
             Participant participant = participantRepository
                     .findById(participantId)
-                    .orElseThrow();
+                    .orElseThrow(() -> new RuntimeException("Participant not found"));
 
             ExpenseShare share = new ExpenseShare();
             share.setExpense(savedExpense);
@@ -60,21 +66,25 @@ public class ExpenseController {
         return savedExpense;
     }
 
+    // ✅ Add Expense (simple insert)
     @PostMapping
     public Expense addExpense(@RequestBody Expense expense) {
         return expenseRepository.save(expense);
     }
 
+    // ✅ Get all
     @GetMapping
     public List<Expense> getAllExpenses() {
         return expenseRepository.findAll();
     }
 
+    // ✅ Delete
     @DeleteMapping("/{id}")
     public void deleteExpense(@PathVariable Long id) {
         expenseRepository.deleteById(id);
     }
 
+    // ✅ Update
     @PutMapping("/{id}")
     public Expense updateExpense(@PathVariable Long id, @RequestBody Expense updated) {
 
@@ -88,11 +98,13 @@ public class ExpenseController {
         return expenseRepository.save(e);
     }
 
+    // ✅ Settle
     @DeleteMapping("/settle")
     public void settleUp() {
         expenseShareRepository.deleteAll();
     }
 
+    // ✅ Balances
     @GetMapping("/balances")
     public List<BalanceResponse> getBalances() {
 
@@ -100,7 +112,6 @@ public class ExpenseController {
         List<BalanceResponse> balances = new ArrayList<>();
 
         for (ExpenseShare share : shares) {
-
             Expense expense = share.getExpense();
             Participant payer = expense.getPaidBy();
             Participant participant = share.getParticipant();

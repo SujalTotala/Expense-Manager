@@ -1,7 +1,6 @@
 package expense_manager.model;
 
 import jakarta.persistence.*;
-import expense_manager.model.Participant;
 import lombok.*;
 
 @Data
@@ -16,10 +15,13 @@ public class Expense {
     private Long id;
 
     private String title;
+
     private Double amount;
+
     private String category;
 
+    // ✅ allow null OR handle properly
     @ManyToOne
-    @JoinColumn(name = "paid_by")
+    @JoinColumn(name = "paid_by", nullable = true)
     private Participant paidBy;
 }

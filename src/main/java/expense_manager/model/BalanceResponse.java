@@ -6,6 +6,8 @@ public class BalanceResponse {
     private String toParticipant;
     private double amount;
 
+    public BalanceResponse() {} // ✅ required sometimes
+
     public BalanceResponse(String fromParticipant, String toParticipant, double amount) {
         this.fromParticipant = fromParticipant;
         this.toParticipant = toParticipant;
